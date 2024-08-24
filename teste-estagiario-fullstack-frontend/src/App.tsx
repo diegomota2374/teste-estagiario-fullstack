@@ -8,23 +8,19 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import TaskPage from "./pages/TaskPage/TaskPage";
+import NotFound from "./pages/NotFound/NotFound";
+import Loading from "./components/Loading/Loading";
 
 const ProtectedRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
   const { isAuthenticated } = useAuth();
-  console.log(
-    "Estado de autenticação dentro de ProtectedRoute:",
-    isAuthenticated
-  ); // Verifique o estado
   return isAuthenticated ? element : <Navigate to="/login" />;
 };
 
 const AppRoutes: React.FC = () => {
   const { isAuthenticated } = useAuth();
-  console.log("Estado de autenticação dentro de AppRoutes:", isAuthenticated); // Verifique o estado
 
   if (isAuthenticated === undefined) {
-    // Enquanto o estado de autenticação está sendo determinado, exiba um carregamento ou algo similar
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -32,13 +28,14 @@ const AppRoutes: React.FC = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route
-        path="/taskpage"
+        path="/taskPage"
         element={<ProtectedRoute element={<TaskPage />} />}
       />
       <Route
         path="/"
-        element={<Navigate to={isAuthenticated ? "/taskpage" : "/login"} />}
+        element={<Navigate to={isAuthenticated ? "/taskPage" : "/login"} />}
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
