@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { User, AuthResponse } from "../../types";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const useLoginForm = () => {
   const {
@@ -15,19 +16,27 @@ export const useLoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<User> = async (data) => {
     setLoading(true);
     setServerError(null);
 
     try {
-      const response = await axios.post<AuthResponse>("/api/users/login", data);
+      const response = await axios.post<AuthResponse>(
+        `${apiUrl}/api/login`,
+        data
+      );
       login(response.data.token);
-      alert("Login successful");
-      reset(); // Reset form fields after successful login
+      alert("Login bem-sucedido");
+      reset();
+      navigate("/");
     } catch (error: any) {
       setServerError(
         error.response?.data?.message ||
-          "Login failed. Please check your credentials."
+          "Falha no login. Por favor, verifique suas credenciais."
       );
     } finally {
       setLoading(false);
