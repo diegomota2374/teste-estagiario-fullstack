@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import NotFound from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
+import { TaskProvider } from "./context/TaskContext";
 
 const ProtectedRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -29,7 +30,11 @@ const AppRoutes: React.FC = () => {
       <Route path="/login" element={<Login />} />
       <Route
         path="/taskPage"
-        element={<ProtectedRoute element={<TaskPage />} />}
+        element={
+          <TaskProvider>
+            <ProtectedRoute element={<TaskPage />} />
+          </TaskProvider>
+        }
       />
       <Route
         path="/"

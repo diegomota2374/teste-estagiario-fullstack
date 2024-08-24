@@ -23,7 +23,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("Token no localStorage ao carregar:", token); // Verifique o token
     if (token) {
       setIsAuthenticated(true);
     } else {
