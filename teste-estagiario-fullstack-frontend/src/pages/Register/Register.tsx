@@ -1,38 +1,34 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { User, RegisterResponse } from "../../types";
+import { useRegisterForm } from "../../hooks/useRegisterForm/useRegisterForm";
 
-const Register: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<User>();
-
-  const onSubmit: SubmitHandler<User> = async (data) => {
-    try {
-      const response = await axios.post<RegisterResponse>(
-        "/api/users/register",
-        data
-      );
-      alert(response.data.message);
-    } catch (error) {
-      alert("Registration failed. Please try again.");
-    }
-  };
+const Register = () => {
+  const { register, handleSubmit, errors, loading, serverError, onSubmit } =
+    useRegisterForm();
 
   return (
     <div>
       <h2>Register</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
+          <label>Nome:</label>
+          <input
+            {...register("name", {
+              required: "O nome é obrigatório",
+              minLength: {
+                value: 2,
+                message: "O nome deve ter pelo menos 2 caracteres",
+              },
+            })}
+          />
+          {errors.name && <p>{errors.name.message}</p>}
+        </div>
+        <div>
           <label>Email:</label>
           <input
             {...register("email", {
-              required: "Email is required",
+              required: "O e-mail é obrigatório",
               pattern: {
                 value: /^\S+@\S+$/i,
-                message: "Invalid email address",
+                message: "Endereço de e-mail inválido",
               },
             })}
           />
@@ -43,16 +39,19 @@ const Register: React.FC = () => {
           <input
             type="password"
             {...register("password", {
-              required: "Password is required",
+              required: "A senha é obrigatória",
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters long",
+                message: "A senha deve ter pelo menos 6 caracteres",
               },
             })}
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
+        </button>
+        {serverError && <p>{serverError}</p>}
       </form>
     </div>
   );

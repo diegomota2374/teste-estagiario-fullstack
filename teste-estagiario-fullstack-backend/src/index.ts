@@ -4,9 +4,18 @@ import { connectDatabase } from "./database";
 import taskRoutes from "./routes/taskRoutes";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = 4000;
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // URL do seu frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 

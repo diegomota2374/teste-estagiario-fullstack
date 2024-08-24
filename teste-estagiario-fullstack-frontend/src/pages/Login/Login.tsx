@@ -1,25 +1,8 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { User, AuthResponse } from "../../types";
-import { useAuth } from "../../context/AuthContext";
+import { useLoginForm } from "../../hooks/useLoginForm/useLoginForm";
 
-const Login: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<User>();
-  const { login } = useAuth();
-
-  const onSubmit: SubmitHandler<User> = async (data) => {
-    try {
-      const response = await axios.post<AuthResponse>("/api/users/login", data);
-      login(response.data.token);
-      alert("Login successful");
-    } catch (error) {
-      alert("Login failed. Please check your credentials.");
-    }
-  };
+const Login = () => {
+  const { register, handleSubmit, errors, loading, serverError, onSubmit } =
+    useLoginForm();
 
   return (
     <div>
@@ -52,7 +35,10 @@ const Login: React.FC = () => {
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+        {serverError && <p>{serverError}</p>}
       </form>
     </div>
   );
