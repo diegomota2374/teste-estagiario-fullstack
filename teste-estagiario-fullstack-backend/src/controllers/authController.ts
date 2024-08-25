@@ -28,7 +28,7 @@ export async function login(req: Request, res: Response): Promise<Response> {
     { id: user.id, email: user.email },
     authConfig.jwt.secret,
     {
-      expiresIn: "1h",
+      expiresIn: "1d",
     }
   );
 

@@ -13,7 +13,7 @@ import {
   SubmitButton,
 } from "./TaskForm.styles";
 
-const TaskForm: React.FC<TaskFormProps> = ({ onBack }) => {
+const TaskForm: React.FC<TaskFormProps> = () => {
   const { register, handleSubmit, errors, onSubmit } = useTaskForm();
 
   return (

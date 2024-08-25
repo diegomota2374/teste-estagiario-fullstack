@@ -4,6 +4,7 @@ export interface Task {
   id: number;
   title: string;
   description: string;
+  userId: number;
   completed: boolean;
 }
 
@@ -34,6 +35,7 @@ export const createTask = async (task: Omit<Task, "id">): Promise<Task> => {
   const response = await axios.post<Task>(`${API_URL}/api/tasks`, task, {
     headers: getAuthHeaders(),
   });
+  console.log(response);
   return response.data;
 };
 
