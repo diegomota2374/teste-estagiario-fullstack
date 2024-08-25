@@ -11,6 +11,8 @@ import TaskPage from "./pages/TaskPage/TaskPage";
 import NotFound from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import { TaskProvider } from "./context/TaskContext";
+import Layout from "./components/Layout/Layout";
+import GlobalStyles from "./styles/Globalstyles";
 
 const ProtectedRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
   const { isAuthenticated } = useAuth();
@@ -32,7 +34,9 @@ const AppRoutes: React.FC = () => {
         path="/taskPage"
         element={
           <TaskProvider>
-            <ProtectedRoute element={<TaskPage />} />
+            <Layout>
+              <ProtectedRoute element={<TaskPage />} />
+            </Layout>
           </TaskProvider>
         }
       />
@@ -40,7 +44,14 @@ const AppRoutes: React.FC = () => {
         path="/"
         element={<Navigate to={isAuthenticated ? "/taskPage" : "/login"} />}
       />
-      <Route path="*" element={<NotFound />} />
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <NotFound />
+          </Layout>
+        }
+      />
     </Routes>
   );
 };
@@ -49,6 +60,7 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
+        <GlobalStyles />
         <AppRoutes />
       </Router>
     </AuthProvider>

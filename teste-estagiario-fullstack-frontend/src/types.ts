@@ -43,3 +43,7 @@ export interface TaskContextType {
   editTask: (id: number, updatedTask: Partial<Task>) => void;
   removeTask: (id: number) => void;
 }
+
+export interface TaskFormProps {
+  onBack: () => void;
+}
