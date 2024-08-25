@@ -1,3 +1,5 @@
+import { Task } from "./services/taskService";
+
 export interface User {
   name: string;
   email: string;
@@ -10,4 +12,34 @@ export interface AuthResponse {
 
 export interface RegisterResponse {
   message: string;
+}
+
+export interface DecodedToken {
+  id: number;
+  email: string;
+  iat: number;
+  exp: number;
+}
+
+export interface AuthContextType {
+  isAuthenticated: boolean | undefined;
+  userId: number | null;
+  login: (token: string) => void;
+  logout: () => void;
+}
+
+export interface TaskFormInputs {
+  title: string;
+  description: string;
+}
+
+export interface NewTask extends Omit<Task, "id"> {
+  userId: number;
+}
+
+export interface TaskContextType {
+  tasks: Task[];
+  addTask: (task: Omit<Task, "id">) => void;
+  editTask: (id: number, updatedTask: Partial<Task>) => void;
+  removeTask: (id: number) => void;
 }

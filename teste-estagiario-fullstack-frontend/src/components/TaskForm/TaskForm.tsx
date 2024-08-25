@@ -1,26 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useTasks } from "../../context/TaskContext";
-
-interface TaskFormInputs {
-  title: string;
-  description: string;
-}
+import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
 
 const TaskForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TaskFormInputs>();
-  const { addTask } = useTasks();
-
-  const onSubmit: SubmitHandler<TaskFormInputs> = (data) => {
-    addTask({
-      title: data.title,
-      description: data.description,
-      completed: false,
-    });
-  };
+  const { register, handleSubmit, errors, onSubmit } = useTaskForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

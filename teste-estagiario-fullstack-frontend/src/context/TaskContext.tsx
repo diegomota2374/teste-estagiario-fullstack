@@ -1,4 +1,3 @@
-// src/context/TaskContext.tsx
 import React, {
   createContext,
   useContext,
@@ -13,13 +12,7 @@ import {
   updateTask,
   deleteTask,
 } from "../services/taskService";
-
-interface TaskContextType {
-  tasks: Task[];
-  addTask: (task: Omit<Task, "id">) => void;
-  editTask: (id: number, updatedTask: Partial<Task>) => void;
-  removeTask: (id: number) => void;
-}
+import { TaskContextType } from "../types";
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -63,6 +56,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
 export const useTasks = (): TaskContextType => {
   const context = useContext(TaskContext);
-  if (!context) throw new Error("useTasks must be used within a TaskProvider");
+  if (!context)
+    throw new Error("useTasks deve ser usado dentro de um TaskProvider");
   return context;
 };

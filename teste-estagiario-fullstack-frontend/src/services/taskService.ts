@@ -26,12 +26,12 @@ export const getTasks = async (): Promise<Task[]> => {
     } else {
       console.error("Erro desconhecido ao buscar tasks:", error);
     }
-    throw error; // Re-lançar o erro para que ele possa ser tratado em outro lugar
+    throw error;
   }
 };
 
 export const createTask = async (task: Omit<Task, "id">): Promise<Task> => {
-  const response = await axios.post<Task>(`${API_URL}/tasks`, task, {
+  const response = await axios.post<Task>(`${API_URL}/api/tasks`, task, {
     headers: getAuthHeaders(),
   });
   return response.data;
@@ -41,14 +41,14 @@ export const updateTask = async (
   id: number,
   task: Partial<Task>
 ): Promise<Task> => {
-  const response = await axios.put<Task>(`${API_URL}/tasks/${id}`, task, {
+  const response = await axios.put<Task>(`${API_URL}/api/tasks/${id}`, task, {
     headers: getAuthHeaders(),
   });
   return response.data;
 };
 
 export const deleteTask = async (id: number): Promise<void> => {
-  await axios.delete(`${API_URL}/tasks/${id}`, {
+  await axios.delete(`${API_URL}/api/tasks/${id}`, {
     headers: getAuthHeaders(),
   });
 };

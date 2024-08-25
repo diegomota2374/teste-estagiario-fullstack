@@ -13,7 +13,7 @@ const TaskPage = () => {
     <div>
       <h1>Task Manager</h1>
       <button onClick={handleLogout}>Logout</button>
-      {/* <TaskForm /> */}
+      <TaskForm />
       <TaskList />
     </div>
   );
