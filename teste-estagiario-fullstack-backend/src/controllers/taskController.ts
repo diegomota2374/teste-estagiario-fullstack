@@ -91,7 +91,7 @@ export async function updateTask(
   res: Response
 ): Promise<Response> {
   const { id } = req.params;
-  const { title, description, userId } = req.body;
+  const { title, description, userId, completed } = req.body;
 
   try {
     const task = await taskRepository.findOne({ where: { id: parseInt(id) } });
@@ -105,6 +105,7 @@ export async function updateTask(
       const user = await userRepository.findOneBy({ id: parseInt(userId) });
       if (user) task.user = user;
     }
+    if (completed !== undefined) task.completed = completed;
 
     await taskRepository.save(task);
 
