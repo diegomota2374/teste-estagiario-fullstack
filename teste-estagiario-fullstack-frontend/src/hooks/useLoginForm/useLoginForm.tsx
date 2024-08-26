@@ -43,9 +43,14 @@ export const useLoginForm = () => {
     }
   };
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   return {
     register,
     handleSubmit,
+    handleRegisterClick,
     errors,
     loading,
     serverError,
