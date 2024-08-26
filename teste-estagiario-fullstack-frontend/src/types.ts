@@ -16,6 +16,7 @@ export interface RegisterResponse {
 
 export interface DecodedToken {
   id: number;
+  name: string;
   email: string;
   iat: number;
   exp: number;
@@ -26,6 +27,7 @@ export interface AuthContextType {
   userId: number | null;
   login: (token: string) => void;
   logout: () => void;
+  userName: string;
 }
 
 export interface TaskFormInputs {

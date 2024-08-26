@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
 } from "react";
-import { AuthContextType, DecodedToken } from "../types";
+import { AuthContextType, DecodedToken, User } from "../types";
 import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,12 +17,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     undefined
   );
   const [userId, setUserId] = useState<number | null>(null);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode<DecodedToken>(token);
       setUserId(decodedToken.id);
+      setUserName(decodedToken.name);
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
@@ -33,6 +35,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem("token", token);
     const decodedToken = jwtDecode<DecodedToken>(token);
     setUserId(decodedToken.id);
+    setUserName(decodedToken.name);
+    console.log("saber se o nome ta ok:", decodedToken);
     setIsAuthenticated(true);
   };
 
@@ -43,7 +47,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userId, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, userId, login, logout, userName }}
+    >
       {children}
     </AuthContext.Provider>
   );

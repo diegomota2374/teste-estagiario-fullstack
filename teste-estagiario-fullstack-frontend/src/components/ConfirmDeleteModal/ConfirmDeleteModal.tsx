@@ -28,7 +28,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
         <ModalTitle>Confirmar exclusão</ModalTitle>
         <p>Tem certeza de que deseja excluir esta tarefa?</p>
         <ButtonContainer>
-          <ConfirmButton onClick={onConfirm}>Sim, excluir</ConfirmButton>
+          <ConfirmButton onClick={onConfirm}>Excluir</ConfirmButton>
           <CancelButton onClick={onClose}>Cancelar</CancelButton>
         </ButtonContainer>
       </ModalContent>

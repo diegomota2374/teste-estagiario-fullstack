@@ -10,7 +10,7 @@ import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 70vh;
+  height: 65vh;
 }
 `;
 

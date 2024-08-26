@@ -1,66 +1,48 @@
-// src/components/Layout/Layout.tsx
-import React from "react";
-import styled from "styled-components";
-import { useAuth } from "../../context/AuthContext";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Garante que o container ocupe pelo menos 100% da altura da viewport */
-`;
-
-const Header = styled.header`
-  background-color: #1f1f1f;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Footer = styled.footer`
-  background-color: #1f1f1f;
-  padding: 16px;
-  text-align: center;
-`;
-
-const MainContent = styled.main`
-  flex: 1; /* Permite que o conteúdo principal expanda para preencher o espaço disponível */
-`;
-
-const Button = styled.button`
-  background-color: #6200ee;
-  color: #ffffff;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: #3700b3;
-  }
-`;
-
-const LogoutButton = styled(Button)`
-  margin-left: auto;
-  background-color: #bb86fc;
-
-  &:hover {
-    background-color: #3700b3;
-  }
-`;
+import {
+  Container,
+  Header,
+  Footer,
+  MainContent,
+  LogoutButton,
+  LogoutIcon,
+  UserName,
+} from "./Layout.styles";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import ConfirmLogoutModal from "../ConfirmLogoutModal/ConfirmLogoutModal";
+import useLogoutModal from "../../hooks/useLogoutModal/useLogoutModal";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { logout } = useAuth();
+  // Hook to manage logout modal state and logic
+  const {
+    isModalOpen,
+    userName,
+    handleLogoutClick,
+    handleConfirmLogout,
+    handleCancelLogout,
+  } = useLogoutModal();
 
   return (
     <Container>
       <Header>
-        <h1>Minha Aplicação</h1>
-        <LogoutButton onClick={logout}>Logout</LogoutButton>
+        {/* Display the logged-in user's name */}
+        <UserName>{userName}</UserName>
+        {/* Logout button with icon */}
+        <LogoutButton onClick={handleLogoutClick}>
+          <LogoutIcon>
+            <RiLogoutCircleRLine />
+          </LogoutIcon>
+        </LogoutButton>
       </Header>
+      {/* Main content area */}
       <MainContent>{children}</MainContent>
+      {/* Footer */}
       <Footer>© 2024 Minha Aplicação. Todos os direitos reservados.</Footer>
+      {/* Confirmation modal for logout */}
+      <ConfirmLogoutModal
+        isOpen={isModalOpen}
+        onClose={handleCancelLogout}
+        onConfirm={handleConfirmLogout}
+      />
     </Container>
   );
 };
