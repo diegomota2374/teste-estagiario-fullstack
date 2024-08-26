@@ -10,6 +10,7 @@ import {
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import ConfirmLogoutModal from "../ConfirmLogoutModal/ConfirmLogoutModal";
 import useLogoutModal from "../../hooks/useLogoutModal/useLogoutModal";
+import { Toaster } from "sonner";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Hook to manage logout modal state and logic
@@ -34,7 +35,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </LogoutButton>
       </Header>
       {/* Main content area */}
-      <MainContent>{children}</MainContent>
+      <MainContent>
+        <Toaster position="top-center" richColors />
+        {children}
+      </MainContent>
       {/* Footer */}
       <Footer>© 2024 Diego Mota. </Footer>
       {/* Confirmation modal for logout */}

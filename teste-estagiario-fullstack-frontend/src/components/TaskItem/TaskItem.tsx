@@ -1,9 +1,5 @@
 // src/components/TaskItem.tsx
-import React, { useState } from "react";
 import { Task } from "../../services/taskService";
-import { useTaskList } from "../../hooks/useTaskList/useTaskList";
-import { useTasks } from "../../context/TaskContext";
-import { useForm, SubmitHandler } from "react-hook-form";
 import {
   TaskItemContainer,
   TaskTitle,

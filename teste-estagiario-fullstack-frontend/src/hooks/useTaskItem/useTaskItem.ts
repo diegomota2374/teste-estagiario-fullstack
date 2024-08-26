@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useTasks } from "../../context/TaskContext";
 import { useTaskList } from "../../hooks/useTaskList/useTaskList";
 import { Task } from "../../services/taskService";
+import { toast } from "sonner";
 
 // Define the shape of the form data
 interface FormValues {
@@ -52,6 +53,7 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
         title: data.title,
         description: data.description,
       }); // Reset form after successful save
+      toast.success("Tarefa Editada com Sucesso!", { duration: 2000 });
     } catch (error) {
       console.error("Error saving task:", error);
     }
@@ -72,6 +74,7 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
   const handleConfirmDelete = async () => {
     try {
       await removeTask(task.id);
+      toast.success("Tarefa Excluida com Sucesso!", { duration: 2000 });
     } catch (error) {
       console.error("Error deleting task:", error);
     } finally {

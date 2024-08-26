@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useTasks } from "../../context/TaskContext";
 import { useAuth } from "../../context/AuthContext";
 import { NewTask, TaskFormInputs } from "../../types";
+import { toast } from "sonner";
 
 const useTaskForm = (onTaskAdded: () => void) => {
   const {
@@ -27,6 +28,7 @@ const useTaskForm = (onTaskAdded: () => void) => {
       addTask(newTask);
       onTaskAdded();
       reset();
+      toast.success(" Tarefa Criada com Sucesso! ", { duration: 2000 });
     } else {
       console.error("O ID do usuário não está disponível");
     }

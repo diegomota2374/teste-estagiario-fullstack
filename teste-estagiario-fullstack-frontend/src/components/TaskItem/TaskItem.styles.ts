@@ -12,7 +12,7 @@ export const TaskItemContainer = styled.div`
 `;
 
 export const TaskTitle = styled.h3`
-  margin-top: 0;
+  margin: 0;
   color: #e0e0e0;
 `;
 
@@ -41,6 +41,7 @@ export const TaskButton = styled.button`
   font-size: 14px;
   margin-right: 8px;
   padding: 8px 16px;
+  width: 80px;
 
   &:hover {
     background: #333;
