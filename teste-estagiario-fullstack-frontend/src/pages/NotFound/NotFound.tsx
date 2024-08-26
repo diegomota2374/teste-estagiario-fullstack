@@ -1,20 +1,26 @@
+// src/pages/NotFound/NotFound.tsx
 import React from "react";
-import "./NotFound.css"; // Importa o arquivo de estilos
+import {
+  NotFoundContainer,
+  NotFoundContent,
+  NotFoundTitle,
+  NotFoundMessage,
+  NotFoundDescription,
+  NotFoundLink,
+} from "./NotFound.styles";
 
 const NotFound: React.FC = () => {
   return (
-    <div className="not-found-container">
-      <div className="not-found-content">
-        <h1 className="not-found-title">404</h1>
-        <p className="not-found-message">Página Não Encontrada</p>
-        <p className="not-found-description">
+    <NotFoundContainer>
+      <NotFoundContent>
+        <NotFoundTitle>404</NotFoundTitle>
+        <NotFoundMessage>Página Não Encontrada</NotFoundMessage>
+        <NotFoundDescription>
           Desculpe, a página que você está procurando não foi encontrada.
-        </p>
-        <a href="/" className="not-found-link">
-          Voltar para a Página Inicial
-        </a>
-      </div>
-    </div>
+        </NotFoundDescription>
+        <NotFoundLink href="/">Voltar para a Página Inicial</NotFoundLink>
+      </NotFoundContent>
+    </NotFoundContainer>
   );
 };
 

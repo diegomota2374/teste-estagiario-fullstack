@@ -31,7 +31,7 @@ const TaskPage: React.FC = () => {
       <MainContent>
         <Header>
           {showTaskForm && <BackButton onClick={toggleView} />}
-          <Title>Gerenciador de tarefas</Title>
+          <Title>Gerenciador de Tarefas</Title>
         </Header>
         {showTaskForm ? (
           <TaskForm
