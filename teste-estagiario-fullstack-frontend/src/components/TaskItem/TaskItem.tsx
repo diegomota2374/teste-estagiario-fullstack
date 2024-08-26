@@ -3,6 +3,7 @@ import React from "react";
 import { Task } from "../../services/taskService";
 import { useTaskList } from "../../hooks/useTaskList/useTaskList";
 import { useTasks } from "../../context/TaskContext";
+import { useForm, SubmitHandler } from "react-hook-form";
 import {
   TaskItemContainer,
   TaskTitle,
@@ -14,6 +15,12 @@ import {
 } from "./TaskItem.styles";
 import TaskCheckboxLabel from "../TaskCheckBoxLabel/TaskCheckBoxLabel";
 
+// Define the shape of the form data
+interface FormValues {
+  title: string;
+  description: string;
+}
+
 interface TaskItemProps {
   task: Task;
 }
@@ -22,11 +29,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const { removeTask } = useTasks();
   const {
     isEditing,
+    handleToggleComplete,
     editedTitle,
     editedDescription,
-    setEditedTitle,
-    setEditedDescription,
-    handleToggleComplete,
     handleEditClick,
     handleSaveClick,
     handleCancelClick,
@@ -36,28 +41,63 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     initialDescription: task.description,
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: {
+      title: editedTitle,
+      description: editedDescription,
+    },
+    mode: "onBlur",
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      await handleSaveClick(data.title, data.description);
+      reset({
+        title: data.title,
+        description: data.description,
+      }); // Reset form after successful save
+    } catch (error) {
+      console.error("Error saving task:", error);
+    }
+  };
+  const handleCancel = () => {
+    handleCancelClick(); // Chama a função para sair do modo de edição
+    reset({
+      title: task.title,
+      description: task.description,
+    }); // Reseta o formulário para os valores originais
+  };
+
   return (
     <TaskItemContainer>
       {isEditing ? (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <TaskInput
-            type="text"
-            value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
+            {...register("title", { required: "Title is required" })}
+            placeholder="Title"
           />
+          {errors.title && <p>{errors.title.message}</p>}
           <TaskTextarea
-            value={editedDescription}
-            onChange={(e) => setEditedDescription(e.target.value)}
+            {...register("description", {
+              required: "Description is required",
+            })}
+            placeholder="Description"
           />
+          {errors.description && <p>{errors.description.message}</p>}
           <TaskButtonContainer>
-            <TaskButton className="save" onClick={handleSaveClick}>
+            <TaskButton className="save" type="submit">
               Save
             </TaskButton>
-            <TaskButton className="cancel" onClick={handleCancelClick}>
+            <TaskButton className="cancel" type="button" onClick={handleCancel}>
               Cancel
             </TaskButton>
           </TaskButtonContainer>
-        </>
+        </form>
       ) : (
         <>
           <TaskTitle>{task.title}</TaskTitle>

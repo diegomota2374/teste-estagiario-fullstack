@@ -10,11 +10,13 @@ export interface Task {
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
+// Helper function to get authentication headers
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+// Fetch all tasks
 export const getTasks = async (): Promise<Task[]> => {
   try {
     const response = await axios.get<Task[]>(`${API_URL}/api/tasks`, {
@@ -23,14 +25,15 @@ export const getTasks = async (): Promise<Task[]> => {
     return response.data;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao buscar tasks:", error.message);
+      console.error("Error fetching tasks:", error.message);
     } else {
-      console.error("Erro desconhecido ao buscar tasks:", error);
+      console.error("Unknown error occurred while fetching tasks:", error);
     }
     throw error;
   }
 };
 
+// Fetch a task by ID
 export const getTaskById = async (id: number): Promise<Task> => {
   try {
     const response = await axios.get<Task>(`${API_URL}/api/tasks/${id}`, {
@@ -39,21 +42,32 @@ export const getTaskById = async (id: number): Promise<Task> => {
     return response.data;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Erro ao buscar task:", error.message);
+      console.error("Error fetching task:", error.message);
     } else {
-      console.error("Erro desconhecido ao buscar task:", error);
+      console.error("Unknown error occurred while fetching task:", error);
     }
     throw error;
   }
 };
 
+// Create a new task
 export const createTask = async (task: Omit<Task, "id">): Promise<Task> => {
-  const response = await axios.post<Task>(`${API_URL}/api/tasks`, task, {
-    headers: getAuthHeaders(),
-  });
-  return response.data;
+  try {
+    const response = await axios.post<Task>(`${API_URL}/api/tasks`, task, {
+      headers: getAuthHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error creating task:", error.message);
+    } else {
+      console.error("Unknown error occurred while creating task:", error);
+    }
+    throw error;
+  }
 };
 
+// Update an existing task
 export const updateTask = async (
   id: number,
   task: Partial<Task>
@@ -62,22 +76,29 @@ export const updateTask = async (
     const response = await axios.put<Task>(`${API_URL}/api/tasks/${id}`, task, {
       headers: getAuthHeaders(),
     });
-
     return response.data;
   } catch (error) {
-    // Check if the error is an instance of Error and log the message
     if (error instanceof Error) {
       console.error("Error updating task:", error.message);
     } else {
       console.error("Unknown error occurred while updating task:", error);
     }
-    // Optionally, you might want to rethrow the error to handle it further up the chain
     throw error;
   }
 };
 
+// Delete a task
 export const deleteTask = async (id: number): Promise<void> => {
-  await axios.delete(`${API_URL}/api/tasks/${id}`, {
-    headers: getAuthHeaders(),
-  });
+  try {
+    await axios.delete(`${API_URL}/api/tasks/${id}`, {
+      headers: getAuthHeaders(),
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error deleting task:", error.message);
+    } else {
+      console.error("Unknown error occurred while deleting task:", error);
+    }
+    throw error;
+  }
 };

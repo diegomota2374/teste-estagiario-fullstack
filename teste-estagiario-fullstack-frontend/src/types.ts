@@ -39,9 +39,9 @@ export interface NewTask extends Omit<Task, "id"> {
 
 export interface TaskContextType {
   tasks: Task[];
-  addTask: (task: Omit<Task, "id">) => void;
-  editTask: (id: number, updatedTask: Partial<Task>) => void;
-  removeTask: (id: number) => void;
+  addTask: (task: Omit<Task, "id">) => Promise<void>;
+  editTask: (id: number, updatedTask: Partial<Task>) => Promise<void>;
+  removeTask: (id: number) => Promise<void>;
 }
 
 export interface TaskFormProps {

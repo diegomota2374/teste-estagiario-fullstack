@@ -21,30 +21,54 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  // Fetch tasks when the component mounts
   useEffect(() => {
     const fetchTasks = async () => {
-      const tasks = await getTasks();
-      setTasks(tasks);
+      try {
+        const tasks = await getTasks();
+        setTasks(tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
     };
 
     fetchTasks();
   }, []);
 
+  // Re-fetch tasks after adding a new task
   const addTask = async (task: Omit<Task, "id">) => {
-    const newTask = await createTask(task);
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    try {
+      await createTask(task);
+      // Re-fetch tasks to get the updated list
+      const updatedTasks = await getTasks();
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   };
 
+  // Re-fetch tasks after editing a task
   const editTask = async (id: number, updatedTask: Partial<Task>) => {
-    const updated = await updateTask(id, updatedTask);
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => (task.id === id ? updated : task))
-    );
+    try {
+      await updateTask(id, updatedTask);
+      // Re-fetch tasks to get the updated list
+      const updatedTasks = await getTasks();
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error editing task:", error);
+    }
   };
 
+  // Re-fetch tasks after removing a task
   const removeTask = async (id: number) => {
-    await deleteTask(id);
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    try {
+      await deleteTask(id);
+      // Re-fetch tasks to get the updated list
+      const updatedTasks = await getTasks();
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error removing task:", error);
+    }
   };
 
   return (
@@ -56,7 +80,6 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({
 
 export const useTasks = (): TaskContextType => {
   const context = useContext(TaskContext);
-  if (!context)
-    throw new Error("useTasks deve ser usado dentro de um TaskProvider");
+  if (!context) throw new Error("useTasks must be used within a TaskProvider");
   return context;
 };

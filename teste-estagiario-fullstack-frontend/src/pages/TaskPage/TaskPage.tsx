@@ -5,6 +5,7 @@ import TaskForm from "../../components/TaskForm/TaskForm";
 import TaskList from "../../components/TaskList/TaskList";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
 import BackButton from "../../components/BackButton/BackButton";
+import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
 
 const PageContainer = styled.div`
   display: flex;
@@ -29,7 +30,14 @@ const Header = styled.div`
 const TaskPage: React.FC = () => {
   const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
 
+  const { register, handleSubmit, errors, onSubmit, reset } = useTaskForm(
+    () => {
+      setShowTaskForm(false);
+    }
+  );
+
   const toggleView = () => {
+    reset();
     setShowTaskForm(!showTaskForm);
   };
 
@@ -39,12 +47,22 @@ const TaskPage: React.FC = () => {
         {showTaskForm ? (
           <Header>
             <BackButton onClick={toggleView} />
-            <h1>Task Manager</h1>
+            <h1>Gerenciador de tarefas</h1>
           </Header>
         ) : (
-          <h1>Task Manager</h1>
+          <h1>Gerenciador de tarefas</h1>
         )}
-        {showTaskForm ? <TaskForm onBack={toggleView} /> : <TaskList />}
+        {showTaskForm ? (
+          <TaskForm
+            register={register}
+            handleSubmit={handleSubmit}
+            errors={errors}
+            onSubmit={onSubmit}
+            onBack={toggleView}
+          />
+        ) : (
+          <TaskList />
+        )}
       </MainContent>
       {!showTaskForm && <FloatingButton onClick={toggleView} />}
     </PageContainer>

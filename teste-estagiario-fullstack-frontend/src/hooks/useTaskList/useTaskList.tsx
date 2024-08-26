@@ -1,6 +1,7 @@
 // src/hooks/useTaskList/useTaskList.ts
 import { useState, useCallback } from "react";
 import { updateTask, getTaskById } from "../../services/taskService";
+import { useTasks } from "../../context/TaskContext";
 
 interface UseTaskListProps {
   taskId: number;
@@ -13,6 +14,7 @@ export const useTaskList = ({
   initialTitle,
   initialDescription,
 }: UseTaskListProps) => {
+  const { editTask } = useTasks();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(initialTitle);
   const [editedDescription, setEditedDescription] =
@@ -21,7 +23,10 @@ export const useTaskList = ({
   const handleToggleComplete = useCallback(async () => {
     try {
       const task = await getTaskById(taskId);
-      await updateTask(taskId, { completed: !task.completed });
+      const updatedTask = await updateTask(taskId, {
+        completed: !task.completed,
+      });
+      editTask(taskId, { completed: updatedTask.completed });
     } catch (error) {
       console.error("Error toggling task completion:", error);
     }
@@ -31,17 +36,16 @@ export const useTaskList = ({
     setIsEditing(true);
   };
 
-  const handleSaveClick = async () => {
-    if (editedTitle.trim() === "" || editedDescription.trim() === "") {
-      alert("Title and description cannot be empty");
-      return;
-    }
+  const handleSaveClick = async (title: string, description: string) => {
     try {
-      await updateTask(taskId, {
-        title: editedTitle,
-        description: editedDescription,
-      });
+      const updatedTask = await updateTask(taskId, { title, description });
       setIsEditing(false);
+      editTask(taskId, {
+        title: updatedTask.title,
+        description: updatedTask.description,
+      });
+      setEditedTitle(title);
+      setEditedDescription(description);
     } catch (error) {
       console.error("Error saving task:", error);
     }

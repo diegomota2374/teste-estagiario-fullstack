@@ -4,11 +4,12 @@ import { useTasks } from "../../context/TaskContext";
 import { useAuth } from "../../context/AuthContext";
 import { NewTask, TaskFormInputs } from "../../types";
 
-const useTaskForm = () => {
+const useTaskForm = (onTaskAdded: () => void) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<TaskFormInputs>();
 
   const { addTask } = useTasks();
@@ -24,6 +25,8 @@ const useTaskForm = () => {
       };
 
       addTask(newTask);
+      onTaskAdded();
+      reset();
     } else {
       console.error("O ID do usuário não está disponível");
     }
@@ -34,6 +37,7 @@ const useTaskForm = () => {
     handleSubmit,
     errors,
     onSubmit,
+    reset,
   };
 };
 

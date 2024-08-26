@@ -1,7 +1,7 @@
 // src/components/TaskForm/TaskForm.tsx
 import React from "react";
 import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
-import { TaskFormProps } from "../../types";
+// import { TaskFormProps } from "../../types";
 import {
   FormContainer,
   FormTitle,
@@ -12,10 +12,28 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "./TaskForm.styles";
+import {
+  FieldErrors,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
+import { TaskFormInputs } from "../../types";
 
-const TaskForm: React.FC<TaskFormProps> = () => {
-  const { register, handleSubmit, errors, onSubmit } = useTaskForm();
+interface TaskFormProps {
+  register: UseFormRegister<TaskFormInputs>;
+  handleSubmit: UseFormHandleSubmit<TaskFormInputs>;
+  errors: FieldErrors<TaskFormInputs>;
+  onSubmit: (data: TaskFormInputs) => void;
+  onBack: () => void; // Propriedade adicional para o botão de voltar
+}
 
+const TaskForm: React.FC<TaskFormProps> = ({
+  register,
+  handleSubmit,
+  errors,
+  onSubmit,
+  onBack,
+}) => {
   return (
     <>
       <FormContainer>

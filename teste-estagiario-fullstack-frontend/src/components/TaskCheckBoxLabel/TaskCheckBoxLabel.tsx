@@ -13,7 +13,7 @@ const TaskCheckboxLabel: React.FC<TaskCheckboxLabelProps> = ({
 }) => {
   return (
     <TaskCheckboxButton checked={checked} onClick={onChange}>
-      {checked ? "Completed" : "To Do"}
+      {checked ? "Completo" : "Pendente"}
     </TaskCheckboxButton>
   );
 };
