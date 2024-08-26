@@ -1,59 +1,89 @@
+import {
+  RegisterContainer,
+  Title,
+  Form,
+  Label,
+  Input,
+  SubmitButton,
+  CancelButton,
+  ErrorMessage,
+  RegisterContainerPage,
+  ButtonContainer,
+} from "./Register.styles";
 import { useRegisterForm } from "../../hooks/useRegisterForm/useRegisterForm";
 
-const Register = () => {
-  const { register, handleSubmit, errors, loading, serverError, onSubmit } =
-    useRegisterForm();
+const Register: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    handleCancel,
+    errors,
+    loading,
+    serverError,
+    onSubmit,
+  } = useRegisterForm();
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Nome:</label>
-          <input
-            {...register("name", {
-              required: "O nome é obrigatório",
-              minLength: {
-                value: 2,
-                message: "O nome deve ter pelo menos 2 caracteres",
-              },
-            })}
-          />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            {...register("email", {
-              required: "O e-mail é obrigatório",
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: "Endereço de e-mail inválido",
-              },
-            })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            {...register("password", {
-              required: "A senha é obrigatória",
-              minLength: {
-                value: 6,
-                message: "A senha deve ter pelo menos 6 caracteres",
-              },
-            })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-        {serverError && <p>{serverError}</p>}
-      </form>
-    </div>
+    <RegisterContainerPage>
+      <RegisterContainer>
+        <Title>Register</Title>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <Label>Name:</Label>
+            <Input
+              {...register("name", {
+                required: "Name is required",
+                minLength: {
+                  value: 2,
+                  message: "Name must be at least 2 characters long",
+                },
+              })}
+            />
+            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+          </div>
+          <div>
+            <Label>Email:</Label>
+            <Input
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.email && (
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
+            )}
+          </div>
+          <div>
+            <Label>Password:</Label>
+            <Input
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              })}
+            />
+            {errors.password && (
+              <ErrorMessage>{errors.password.message}</ErrorMessage>
+            )}
+          </div>
+          <ButtonContainer>
+            <SubmitButton type="submit" disabled={loading}>
+              {loading ? "Registering..." : "Register"}
+            </SubmitButton>
+            <CancelButton type="button" onClick={handleCancel}>
+              Cancel
+            </CancelButton>
+          </ButtonContainer>
+          {serverError && <ErrorMessage>{serverError}</ErrorMessage>}
+        </Form>
+      </RegisterContainer>
+    </RegisterContainerPage>
   );
 };
 

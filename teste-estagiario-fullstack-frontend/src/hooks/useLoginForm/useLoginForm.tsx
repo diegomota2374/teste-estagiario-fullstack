@@ -30,7 +30,6 @@ export const useLoginForm = () => {
         data
       );
       login(response.data.token);
-      alert("Login bem-sucedido");
       reset();
       navigate("/");
     } catch (error: any) {

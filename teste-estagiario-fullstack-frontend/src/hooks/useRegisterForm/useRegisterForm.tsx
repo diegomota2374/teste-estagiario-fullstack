@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { User, RegisterResponse } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 export const useRegisterForm = () => {
   const {
@@ -13,6 +14,7 @@ export const useRegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const apiUrl = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<User> = async (data) => {
     setLoading(true);
@@ -37,9 +39,14 @@ export const useRegisterForm = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/"); // Redirect to the homepage or another route
+  };
+
   return {
     register,
     handleSubmit,
+    handleCancel,
     errors,
     loading,
     serverError,

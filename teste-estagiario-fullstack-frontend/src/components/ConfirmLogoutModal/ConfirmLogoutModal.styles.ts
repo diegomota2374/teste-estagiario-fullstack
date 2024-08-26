@@ -57,8 +57,8 @@ export const ConfirmButton = styled(ButtonBase)`
 
 // Cancel button style
 export const CancelButton = styled(ButtonBase)`
-  background-color: #2980b9; // Blue background for cancellation
+  background-color: gray; // Blue background for cancellation
   &:hover {
-    background-color: #1f618d; // Darker blue on hover
+    background-color: #484848; // Darker blue on hover
   }
 `;

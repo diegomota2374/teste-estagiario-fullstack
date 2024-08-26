@@ -36,7 +36,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {/* Main content area */}
       <MainContent>{children}</MainContent>
       {/* Footer */}
-      <Footer>© 2024 Minha Aplicação. Todos os direitos reservados.</Footer>
+      <Footer>© 2024 Diego Mota. </Footer>
       {/* Confirmation modal for logout */}
       <ConfirmLogoutModal
         isOpen={isModalOpen}
