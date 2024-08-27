@@ -18,6 +18,8 @@ interface UseTaskItemProps {
 
 const useTaskItem = ({ task }: UseTaskItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
   const { removeTask } = useTasks();
   const {
     isEditing,
@@ -86,6 +88,10 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
     setIsModalOpen(false);
   };
 
+  const handleDescriptionClick = () => {
+    setShowFullDescription(!showFullDescription); // Toggle the description view on click
+  };
+
   return {
     isModalOpen,
     register,
@@ -96,6 +102,8 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
     handleConfirmDelete,
     handleCancelDelete,
     handleToggleComplete,
+    handleDescriptionClick,
+    showFullDescription,
     handleEditClick,
     onSubmit,
     isEditing,

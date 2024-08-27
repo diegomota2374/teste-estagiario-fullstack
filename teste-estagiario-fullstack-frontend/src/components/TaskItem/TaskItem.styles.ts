@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+// Props interface to control full description display
+interface TaskDescriptionProps {
+  showFullDescription: boolean;
+}
+
+// Container for each task item
 export const TaskItemContainer = styled.div`
   background: #2c2c2c;
   border-radius: 8px;
@@ -11,30 +17,41 @@ export const TaskItemContainer = styled.div`
   width: 80vw;
   max-width: 400px;
   min-width: 300px;
+
   @media (min-width: 600px) {
     padding: 24px;
   }
 `;
 
-export const TaskTitle = styled.h3`
+// Task title with optional full description display
+export const TaskTitle = styled.h3<TaskDescriptionProps>`
   margin: 0;
   color: #e0e0e0;
+  cursor: pointer;
+  white-space: ${(props) => (props.showFullDescription ? "normal" : "nowrap")};
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (min-width: 600px) {
     font-size: 1.5rem;
   }
 `;
 
-export const TaskDescription = styled.p`
+// Task description with optional full display
+export const TaskDescription = styled.p<TaskDescriptionProps>`
   margin: 8px 0;
   color: #b0b0b0;
+  cursor: pointer;
+  white-space: ${(props) => (props.showFullDescription ? "normal" : "nowrap")};
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  @media (min-width: 600px) {
-    font-size: 1rem;
-    margin: 12px 0;
+  &:hover {
+    color: #fff;
   }
 `;
 
+// Label for task checkbox
 export const TaskLabel = styled.label`
   display: flex;
   align-items: center;
@@ -46,6 +63,7 @@ export const TaskLabel = styled.label`
   }
 `;
 
+// Task checkbox styling
 export const TaskCheckbox = styled.input.attrs({ type: "checkbox" })`
   margin-right: 8px;
 
@@ -55,6 +73,7 @@ export const TaskCheckbox = styled.input.attrs({ type: "checkbox" })`
   }
 `;
 
+// Button styling for task actions
 export const TaskButton = styled.button`
   background: #444;
   border: none;
@@ -72,6 +91,7 @@ export const TaskButton = styled.button`
 
   &.cancel {
     background: #6c757d;
+
     &:hover {
       background: #5a6268;
     }
@@ -79,6 +99,7 @@ export const TaskButton = styled.button`
 
   &.save {
     background: #6200ee;
+
     &:hover {
       background: #3700b3;
     }
@@ -91,6 +112,7 @@ export const TaskButton = styled.button`
   }
 `;
 
+// Input field for task title and description
 export const TaskInput = styled.input`
   width: 100%;
   margin-bottom: 8px;
@@ -105,6 +127,7 @@ export const TaskInput = styled.input`
   }
 `;
 
+// Error message styling
 export const ErrorMessage = styled.p`
   color: #ff6f6f;
   font-size: 0.875rem;
@@ -114,6 +137,7 @@ export const ErrorMessage = styled.p`
   }
 `;
 
+// Textarea field for task description
 export const TaskTextarea = styled.textarea`
   width: 100%;
   margin-bottom: 8px;
@@ -128,6 +152,7 @@ export const TaskTextarea = styled.textarea`
   }
 `;
 
+// Container for task action buttons
 export const TaskButtonContainer = styled.div`
   display: flex;
   gap: 8px;

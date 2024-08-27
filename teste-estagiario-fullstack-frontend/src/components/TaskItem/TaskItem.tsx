@@ -35,6 +35,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     handleConfirmDelete,
     handleCancelDelete,
     handleToggleComplete,
+    handleDescriptionClick,
+    showFullDescription,
     handleEditClick,
     onSubmit,
     isEditing,
@@ -45,13 +47,17 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
       {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <TaskInput
-            {...register("title", { required: "O título é obrigatório" })}
+            {...register("title", {
+              required: "O título é obrigatório",
+              maxLength: { value: 100, message: "O título é muito longo" },
+            })}
             placeholder="Title"
           />
           {errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}
           <TaskTextarea
             {...register("description", {
               required: "A descrição é obrigatória",
+              maxLength: { value: 500, message: "A descrição é muito longa" },
             })}
             placeholder="Description"
           />
@@ -69,8 +75,17 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         </form>
       ) : (
         <>
-          <TaskTitle>{task.title}</TaskTitle>
-          <TaskDescription>{task.description}</TaskDescription>
+          <TaskTitle showFullDescription={showFullDescription}>
+            {task.title}
+          </TaskTitle>
+          <TaskDescription
+            showFullDescription={showFullDescription}
+            onClick={handleDescriptionClick}
+          >
+            {showFullDescription
+              ? task.description
+              : task.description.split("\n")[0]}
+          </TaskDescription>
           <TaskCheckboxLabel
             checked={task.completed}
             onChange={handleToggleComplete}
