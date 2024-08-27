@@ -1,5 +1,4 @@
 // src/components/ConfirmDeleteModal/ConfirmDeleteModal.tsx
-import React from "react";
 import {
   ModalOverlay,
   ModalContent,
@@ -8,28 +7,30 @@ import {
   ConfirmButton,
   CancelButton,
 } from "./ConfirmDeleteModal.styles";
+import { ConfirmModalProps } from "../../types";
 
-interface ConfirmDeleteModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}
-
-const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
+const ConfirmDeleteModal: React.FC<ConfirmModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
 }) => {
+  // If the modal is not open, return null to render nothing
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <ModalTitle>Confirmar exclusão</ModalTitle>
-        <p>Tem certeza de que deseja excluir esta tarefa?</p>
-        <ButtonContainer>
-          <ConfirmButton onClick={onConfirm}>Excluir</ConfirmButton>
-          <CancelButton onClick={onClose}>Cancelar</CancelButton>
+    <ModalOverlay data-testid="modal-overlay">
+      <ModalContent data-testid="modal-content">
+        <ModalTitle data-testid="modal-title">Confirmar exclusão</ModalTitle>
+        <p data-testid="modal-message">
+          Tem certeza de que deseja excluir esta tarefa?
+        </p>
+        <ButtonContainer data-testid="button-container">
+          <ConfirmButton data-testid="confirm-button" onClick={onConfirm}>
+            Excluir
+          </ConfirmButton>
+          <CancelButton data-testid="cancel-button" onClick={onClose}>
+            Cancelar
+          </CancelButton>
         </ButtonContainer>
       </ModalContent>
     </ModalOverlay>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Container for the loading screen, centers content and provides dark background
 export const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,6 +10,7 @@ export const LoadingContainer = styled.div`
   background-color: #333; /* Dark background color */
 `;
 
+// Spinner element with a rotating animation
 export const LoadingSpinner = styled.div`
   border: 8px solid #555; /* Darker grey for background */
   border-top: 8px solid #fff; /* White for the spinning part */
@@ -27,6 +29,7 @@ export const LoadingSpinner = styled.div`
   }
 `;
 
+// Text displayed below the spinner
 export const LoadingText = styled.p`
   margin-top: 16px;
   font-size: 16px;

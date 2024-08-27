@@ -1,9 +1,6 @@
 // src/components/TaskCheckboxLabel.styles.ts
 import styled from "styled-components";
-
-interface TaskCheckboxButtonProps {
-  checked: boolean;
-}
+import { TaskCheckboxButtonProps } from "../../types";
 
 export const TaskCheckboxButton = styled.button<TaskCheckboxButtonProps>`
   background-color: ${({ checked }) => (checked ? "#27ae60" : "#e74c3c")};

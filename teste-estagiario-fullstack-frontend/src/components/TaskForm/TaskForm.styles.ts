@@ -6,7 +6,7 @@ export const FormContainer = styled.div`
   padding: 24px;
   max-width: 600px;
   margin: 0 auto;
-  background-color: #282828; /* Fundo do formulário */
+  background-color: #282828; /* Form background */
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 `;
@@ -39,7 +39,7 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #1e90ff; /* Azul claro */
+    border-color: #1e90ff; /* Light blue */
     background-color: #2c2c2c;
   }
 `;
@@ -52,17 +52,17 @@ export const TextArea = styled.textarea`
   background-color: #1f1f1f;
   color: #ffffff;
   font-size: 1rem;
-  resize: vertical; /* Permite redimensionar verticalmente */
+  resize: vertical; /* Vertical resizing only */
 
   &:focus {
     outline: none;
-    border-color: #1e90ff; /* Azul claro */
+    border-color: #1e90ff; /* Light blue */
     background-color: #2c2c2c;
   }
 `;
 
 export const ErrorMessage = styled.p`
-  color: #ff6f6f; /* Vermelho para erros */
+  color: #ff6f6f; /* Red for errors */
   font-size: 0.875rem;
   margin-top: 4px;
 `;
@@ -92,10 +92,11 @@ export const SubmitButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
 export const CancelButton = styled.button`
-  width: 48%; /* Mesmo tamanho que o SubmitButton */
+  width: 48%; /* Same size as SubmitButton */
   padding: 10px;
-  background-color: #6c757d; /* Cor cinza */
+  background-color: #6c757d; /* Gray */
   color: white;
   border: none;
   border-radius: 4px;

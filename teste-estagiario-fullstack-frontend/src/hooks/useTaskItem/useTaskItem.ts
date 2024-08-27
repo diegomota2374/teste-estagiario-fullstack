@@ -3,20 +3,11 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useTasks } from "../../context/TaskContext";
 import { useTaskList } from "../../hooks/useTaskList/useTaskList";
-import { Task } from "../../services/taskService";
 import { toast } from "sonner";
+import { TaskFormInputs, TaskItemProps } from "../../types";
 
 // Define the shape of the form data
-interface FormValues {
-  title: string;
-  description: string;
-}
-
-interface UseTaskItemProps {
-  task: Task;
-}
-
-const useTaskItem = ({ task }: UseTaskItemProps) => {
+const useTaskItem = ({ task }: TaskItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -40,7 +31,7 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormValues>({
+  } = useForm<TaskFormInputs>({
     defaultValues: {
       title: editedTitle,
       description: editedDescription,
@@ -48,7 +39,7 @@ const useTaskItem = ({ task }: UseTaskItemProps) => {
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<TaskFormInputs> = async (data) => {
     try {
       await handleSaveClick(data.title, data.description);
       reset({

@@ -1,3 +1,9 @@
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 import { Task } from "./services/taskService";
 
 export interface User {
@@ -35,6 +41,14 @@ export interface TaskFormInputs {
   description: string;
 }
 
+export interface TaskFormProps {
+  register: UseFormRegister<TaskFormInputs>;
+  handleSubmit: UseFormHandleSubmit<TaskFormInputs>;
+  errors: FieldErrors<TaskFormInputs>;
+  onSubmit: (data: TaskFormInputs) => void;
+  onBack: () => void; // Propriedade adicional para o botão de voltar
+}
+
 export interface NewTask extends Omit<Task, "id"> {
   userId: number;
 }
@@ -53,4 +67,16 @@ export interface TaskFormProps {
 export interface TaskCheckboxLabelProps {
   checked: boolean;
   onChange: () => void;
+}
+export interface TaskCheckboxButtonProps {
+  checked: boolean;
+}
+
+export interface ConfirmModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+export interface TaskItemProps {
+  task: Task;
 }

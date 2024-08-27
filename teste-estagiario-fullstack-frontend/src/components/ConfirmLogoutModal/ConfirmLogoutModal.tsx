@@ -1,4 +1,5 @@
 // src/components/ConfirmLogoutModal/ConfirmLogoutModal.tsx
+import { ConfirmModalProps } from "../../types";
 import {
   ModalOverlay,
   ModalContent,
@@ -8,13 +9,7 @@ import {
   CancelButton,
 } from "./ConfirmLogoutModal.styles";
 
-interface ConfirmLogoutModalProps {
-  isOpen: boolean; // Controls whether the modal is visible or not
-  onClose: () => void; // Function to close the modal
-  onConfirm: () => void; // Function to confirm logout
-}
-
-const ConfirmLogoutModal: React.FC<ConfirmLogoutModalProps> = ({
+const ConfirmLogoutModal: React.FC<ConfirmModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
@@ -23,15 +18,19 @@ const ConfirmLogoutModal: React.FC<ConfirmLogoutModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <ModalTitle>Confirmar logout</ModalTitle>
-        <p>Tem certeza de que deseja sair?</p>
-        <ButtonContainer>
+    <ModalOverlay data-testid="modal-overlay">
+      <ModalContent data-testid="modal-content">
+        <ModalTitle data-testid="modal-title">Confirmar logout</ModalTitle>
+        <p data-testid="modal-message">Tem certeza de que deseja sair?</p>
+        <ButtonContainer data-testid="button-container">
           {/* Button to confirm logout */}
-          <ConfirmButton onClick={onConfirm}>Sair</ConfirmButton>
+          <ConfirmButton data-testid="confirm-button" onClick={onConfirm}>
+            Sair
+          </ConfirmButton>
           {/* Button to cancel logout */}
-          <CancelButton onClick={onClose}>Cancelar</CancelButton>
+          <CancelButton data-testid="cancel-button" onClick={onClose}>
+            Cancelar
+          </CancelButton>
         </ButtonContainer>
       </ModalContent>
     </ModalOverlay>

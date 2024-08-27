@@ -1,7 +1,4 @@
 // src/components/TaskForm/TaskForm.tsx
-import React from "react";
-import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
-// import { TaskFormProps } from "../../types";
 import {
   FormContainer,
   FormTitle,
@@ -14,20 +11,8 @@ import {
   ButtonContainer,
   CancelButton,
 } from "./TaskForm.styles";
-import {
-  FieldErrors,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
-import { TaskFormInputs } from "../../types";
 
-interface TaskFormProps {
-  register: UseFormRegister<TaskFormInputs>;
-  handleSubmit: UseFormHandleSubmit<TaskFormInputs>;
-  errors: FieldErrors<TaskFormInputs>;
-  onSubmit: (data: TaskFormInputs) => void;
-  onBack: () => void; // Propriedade adicional para o botão de voltar
-}
+import { TaskFormProps } from "../../types";
 
 const TaskForm: React.FC<TaskFormProps> = ({
   register,
@@ -38,37 +23,49 @@ const TaskForm: React.FC<TaskFormProps> = ({
 }) => {
   return (
     <>
-      <FormContainer>
-        <FormTitle>Adicionar Nova Tarefa</FormTitle>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
-            <Label>Título:</Label>
+      <FormContainer data-testid="form-container">
+        <FormTitle data-testid="form-title">Adicionar Nova Tarefa</FormTitle>
+        <form onSubmit={handleSubmit(onSubmit)} data-testid="form">
+          <FormGroup data-testid="form-group-title">
+            <Label data-testid="label-title">Título:</Label>
             <Input
               type="text"
               {...register("title", {
                 required: "O título é obrigatório",
                 maxLength: { value: 100, message: "O título é muito longo" },
               })}
+              data-testid="input-title"
             />
             {errors.title && (
-              <ErrorMessage>{errors.title.message}</ErrorMessage>
+              <ErrorMessage data-testid="error-title">
+                {errors.title.message}
+              </ErrorMessage>
             )}
           </FormGroup>
-          <FormGroup>
-            <Label>Descrição:</Label>
+          <FormGroup data-testid="form-group-description">
+            <Label data-testid="label-description">Descrição:</Label>
             <TextArea
               {...register("description", {
                 required: "A descrição é obrigatória",
                 maxLength: { value: 500, message: "A descrição é muito longa" },
               })}
+              data-testid="textarea-description"
             />
             {errors.description && (
-              <ErrorMessage>{errors.description.message}</ErrorMessage>
+              <ErrorMessage data-testid="error-description">
+                {errors.description.message}
+              </ErrorMessage>
             )}
           </FormGroup>
-          <ButtonContainer>
-            <SubmitButton type="submit">Adicionar</SubmitButton>
-            <CancelButton type="button" onClick={onBack}>
+          <ButtonContainer data-testid="button-container">
+            <SubmitButton type="submit" data-testid="submit-button">
+              Adicionar
+            </SubmitButton>
+            <CancelButton
+              type="button"
+              onClick={onBack}
+              data-testid="cancel-button"
+            >
               Cancelar
             </CancelButton>
           </ButtonContainer>
