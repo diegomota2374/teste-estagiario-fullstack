@@ -30,8 +30,8 @@ const Button = styled.button`
 
 const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick }) => {
   return (
-    <Button onClick={onClick}>
-      <FaPlus size={24} />
+    <Button onClick={onClick} data-testid="floating-button">
+      <FaPlus size={24} data-testid="floating-button-icon" />
     </Button>
   );
 };
