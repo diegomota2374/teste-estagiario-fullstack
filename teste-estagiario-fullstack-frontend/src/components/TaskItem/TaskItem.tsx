@@ -8,6 +8,7 @@ import {
   TaskInput,
   TaskTextarea,
   TaskButtonContainer,
+  ErrorMessage,
 } from "./TaskItem.styles";
 import TaskCheckboxLabel from "../TaskCheckBoxLabel/TaskCheckBoxLabel";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
@@ -44,23 +45,25 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
       {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <TaskInput
-            {...register("title", { required: "Title is required" })}
+            {...register("title", { required: "O título é obrigatório" })}
             placeholder="Title"
           />
-          {errors.title && <p>{errors.title.message}</p>}
+          {errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}
           <TaskTextarea
             {...register("description", {
-              required: "Description is required",
+              required: "A descrição é obrigatória",
             })}
             placeholder="Description"
           />
-          {errors.description && <p>{errors.description.message}</p>}
+          {errors.description && (
+            <ErrorMessage>{errors.description.message}</ErrorMessage>
+          )}
           <TaskButtonContainer>
             <TaskButton className="save" type="submit">
-              Save
+              Salvar
             </TaskButton>
             <TaskButton className="cancel" type="button" onClick={handleCancel}>
-              Cancel
+              Cancelar
             </TaskButton>
           </TaskButtonContainer>
         </form>
@@ -73,8 +76,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
             onChange={handleToggleComplete}
           />
           <TaskButtonContainer>
-            <TaskButton onClick={handleEditClick}>Edit</TaskButton>
-            <TaskButton onClick={handleDeleteClick}>Delete</TaskButton>
+            <TaskButton onClick={handleEditClick}>Editar</TaskButton>
+            <TaskButton onClick={handleDeleteClick}>Excluir</TaskButton>
           </TaskButtonContainer>
         </>
       )}

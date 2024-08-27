@@ -26,16 +26,16 @@ const Register: React.FC = () => {
   return (
     <RegisterContainerPage>
       <RegisterContainer>
-        <Title>Register</Title>
+        <Title>Task Manager</Title>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <Label>Name:</Label>
+            <Label>Nome:</Label>
             <Input
               {...register("name", {
-                required: "Name is required",
+                required: "O nome é obrigatório",
                 minLength: {
                   value: 2,
-                  message: "Name must be at least 2 characters long",
+                  message: "O nome deve ter pelo menos 2 caracteres",
                 },
               })}
             />
@@ -45,10 +45,10 @@ const Register: React.FC = () => {
             <Label>Email:</Label>
             <Input
               {...register("email", {
-                required: "Email is required",
+                required: "O e-mail é obrigatório",
                 pattern: {
                   value: /^\S+@\S+$/i,
-                  message: "Invalid email address",
+                  message: "Endereço de e-mail inválido",
                 },
               })}
             />
@@ -57,14 +57,14 @@ const Register: React.FC = () => {
             )}
           </div>
           <div>
-            <Label>Password:</Label>
+            <Label>Senha:</Label>
             <Input
               type="password"
               {...register("password", {
-                required: "Password is required",
+                required: "A senha é obrigatória",
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters long",
+                  message: "A senha deve ter pelo menos 6 caracteres",
                 },
               })}
             />
@@ -74,10 +74,10 @@ const Register: React.FC = () => {
           </div>
           <ButtonContainer>
             <SubmitButton type="submit" disabled={loading}>
-              {loading ? "Registering..." : "Register"}
+              {loading ? "Registrando..." : "Cadastre-se"}
             </SubmitButton>
             <CancelButton type="button" onClick={handleCancel}>
-              Cancel
+              Cancelar
             </CancelButton>
           </ButtonContainer>
           {serverError && <ErrorMessage>{serverError}</ErrorMessage>}

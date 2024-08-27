@@ -11,6 +11,8 @@ import {
   TextArea,
   ErrorMessage,
   SubmitButton,
+  ButtonContainer,
+  CancelButton,
 } from "./TaskForm.styles";
 import {
   FieldErrors,
@@ -64,7 +66,12 @@ const TaskForm: React.FC<TaskFormProps> = ({
               <ErrorMessage>{errors.description.message}</ErrorMessage>
             )}
           </FormGroup>
-          <SubmitButton type="submit">Adicionar Tarefa</SubmitButton>
+          <ButtonContainer>
+            <SubmitButton type="submit">Adicionar</SubmitButton>
+            <CancelButton type="button" onClick={onBack}>
+              Cancelar
+            </CancelButton>
+          </ButtonContainer>
         </form>
       </FormContainer>
     </>

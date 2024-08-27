@@ -31,10 +31,10 @@ const Login: React.FC = () => {
             <Label>Email:</Label>
             <Input
               {...register("email", {
-                required: "Email is required",
+                required: "O e-mail é obrigatório",
                 pattern: {
                   value: /^\S+@\S+$/i,
-                  message: "Invalid email address",
+                  message: "Endereço de e-mail inválido",
                 },
               })}
             />
@@ -43,14 +43,14 @@ const Login: React.FC = () => {
             )}
           </div>
           <div>
-            <Label>Password:</Label>
+            <Label>Senha:</Label>
             <Input
               type="password"
               {...register("password", {
-                required: "Password is required",
+                required: "A senha é obrigatória",
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters long",
+                  message: "A senha deve ter pelo menos 6 caracteres",
                 },
               })}
             />

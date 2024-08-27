@@ -3,16 +3,20 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; // Full viewport height
 `;
 
 export const Header = styled.header`
   background-color: #2c2c2c;
   padding: 16px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; // Space between elements
+  align-items: center; // Center vertically
+  @media (min-width: 600px) {
+    padding: 16px 100px 16px 100px;
+  }
 `;
+
 export const UserName = styled.h1`
   font-size: 1.3rem;
   text-transform: uppercase;
@@ -29,7 +33,7 @@ export const Footer = styled.footer`
 `;
 
 export const MainContent = styled.main`
-  flex: 1;
+  flex: 1; // Fill available space
 `;
 
 export const LogoutButton = styled.button`
@@ -43,6 +47,12 @@ export const LogoutButton = styled.button`
 
   &:hover {
     color: #6200ee;
+    &::before {
+      content: "Sair"; // Insert "Sair" on hover
+      color: #6200ee;
+      font-size: 1rem;
+      margin-right: 8px;
+    }
   }
 `;
 

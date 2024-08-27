@@ -1,4 +1,3 @@
-// src/components/TaskItem.styles.ts
 import styled from "styled-components";
 
 export const TaskItemContainer = styled.div`
@@ -9,16 +8,31 @@ export const TaskItemContainer = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
+  width: 80vw;
+  max-width: 400px;
+  min-width: 300px;
+  @media (min-width: 600px) {
+    padding: 24px;
+  }
 `;
 
 export const TaskTitle = styled.h3`
   margin: 0;
   color: #e0e0e0;
+
+  @media (min-width: 600px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const TaskDescription = styled.p`
   margin: 8px 0;
   color: #b0b0b0;
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+    margin: 12px 0;
+  }
 `;
 
 export const TaskLabel = styled.label`
@@ -26,10 +40,19 @@ export const TaskLabel = styled.label`
   align-items: center;
   margin: 8px 0;
   color: #e0e0e0;
+
+  @media (min-width: 600px) {
+    margin: 12px 0;
+  }
 `;
 
 export const TaskCheckbox = styled.input.attrs({ type: "checkbox" })`
   margin-right: 8px;
+
+  @media (min-width: 600px) {
+    margin-right: 12px;
+    transform: scale(1.2);
+  }
 `;
 
 export const TaskButton = styled.button`
@@ -41,24 +64,30 @@ export const TaskButton = styled.button`
   font-size: 14px;
   margin-right: 8px;
   padding: 8px 16px;
-  width: 80px;
+  width: 35%;
 
   &:hover {
     background: #333;
   }
 
   &.cancel {
-    background: #882222;
+    background: #6c757d;
     &:hover {
-      background: #661818;
+      background: #5a6268;
     }
   }
 
   &.save {
-    background: #226622;
+    background: #6200ee;
     &:hover {
-      background: #184418;
+      background: #3700b3;
     }
+  }
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+    padding: 12px 20px;
+    width: auto;
   }
 `;
 
@@ -70,6 +99,19 @@ export const TaskInput = styled.input`
   border: 1px solid #444;
   padding: 8px;
   border-radius: 4px;
+
+  @media (min-width: 600px) {
+    padding: 12px;
+  }
+`;
+
+export const ErrorMessage = styled.p`
+  color: #ff6f6f;
+  font-size: 0.875rem;
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 export const TaskTextarea = styled.textarea`
@@ -80,9 +122,19 @@ export const TaskTextarea = styled.textarea`
   border: 1px solid #444;
   padding: 8px;
   border-radius: 4px;
+
+  @media (min-width: 600px) {
+    padding: 12px;
+  }
 `;
+
 export const TaskButtonContainer = styled.div`
   display: flex;
   gap: 8px;
   margin-top: 8px;
+
+  @media (min-width: 600px) {
+    gap: 12px;
+    margin-top: 12px;
+  }
 `;

@@ -49,3 +49,8 @@ export interface TaskContextType {
 export interface TaskFormProps {
   onBack: () => void;
 }
+
+export interface TaskCheckboxLabelProps {
+  checked: boolean;
+  onChange: () => void;
+}

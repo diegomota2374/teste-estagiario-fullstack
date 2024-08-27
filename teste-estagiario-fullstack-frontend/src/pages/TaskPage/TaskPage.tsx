@@ -2,14 +2,11 @@ import { useState } from "react";
 import {
   PageContainer,
   MainContent,
-  Header,
-  Title,
   FloatingButtonContainer,
 } from "./TaskPage.styles";
 import TaskForm from "../../components/TaskForm/TaskForm";
 import TaskList from "../../components/TaskList/TaskList";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
-import BackButton from "../../components/BackButton/BackButton";
 import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
 
 const TaskPage: React.FC = () => {
@@ -29,10 +26,6 @@ const TaskPage: React.FC = () => {
   return (
     <PageContainer>
       <MainContent>
-        <Header>
-          {showTaskForm && <BackButton onClick={toggleView} />}
-          <Title>Gerenciador de Tarefas</Title>
-        </Header>
         {showTaskForm ? (
           <TaskForm
             register={register}

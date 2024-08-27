@@ -102,9 +102,9 @@ export const RegisterButton = styled.button`
   color: #6200ee; /* Accent color for the button text */
   font-size: 14px;
   cursor: pointer;
-  background: none;
 
   &:hover {
-    color: #3700b3; /* Darker hover color */
+    color: #b7a5d2; /* Darker hover color */
+    background: none;
   }
 `;

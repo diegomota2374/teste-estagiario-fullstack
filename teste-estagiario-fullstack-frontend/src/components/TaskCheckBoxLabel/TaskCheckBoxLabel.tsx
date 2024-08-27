@@ -1,19 +1,26 @@
 // src/components/TaskCheckboxLabel.tsx
-import React from "react";
+import { useState } from "react";
 import { TaskCheckboxButton } from "./TaskCheckBoxLabel.styles";
-
-interface TaskCheckboxLabelProps {
-  checked: boolean;
-  onChange: () => void;
-}
+import { TaskCheckboxLabelProps } from "../../types";
 
 const TaskCheckboxLabel: React.FC<TaskCheckboxLabelProps> = ({
   checked,
   onChange,
 }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      await onChange();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <TaskCheckboxButton checked={checked} onClick={onChange}>
-      {checked ? "Completo" : "Pendente"}
+    <TaskCheckboxButton checked={checked} onClick={handleClick}>
+      {loading ? "Carregando..." : checked ? "Completo" : "Pendente"}
     </TaskCheckboxButton>
   );
 };
