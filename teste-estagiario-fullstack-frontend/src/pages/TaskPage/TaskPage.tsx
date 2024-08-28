@@ -24,8 +24,8 @@ const TaskPage: React.FC = () => {
   };
 
   return (
-    <PageContainer>
-      <MainContent>
+    <PageContainer data-testid="page-container">
+      <MainContent data-testid="main-content">
         {showTaskForm ? (
           <TaskForm
             register={register}
@@ -33,13 +33,16 @@ const TaskPage: React.FC = () => {
             errors={errors}
             onSubmit={onSubmit}
             onBack={toggleView}
+            data-testid="task-form" // Optional: Add data-testid here if needed
           />
         ) : (
-          <TaskList />
+          <TaskList data-testid="task-list" /> // Add data-testid here if needed
         )}
       </MainContent>
-      <FloatingButtonContainer>
-        {!showTaskForm && <FloatingButton onClick={toggleView} />}
+      <FloatingButtonContainer data-testid="floating-button-container">
+        {!showTaskForm && (
+          <FloatingButton onClick={toggleView} data-testid="floating-button" />
+        )}
       </FloatingButtonContainer>
     </PageContainer>
   );

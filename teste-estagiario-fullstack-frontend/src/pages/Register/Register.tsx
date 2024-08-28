@@ -24,13 +24,17 @@ const Register: React.FC = () => {
   } = useRegisterForm();
 
   return (
-    <RegisterContainerPage>
-      <RegisterContainer>
-        <Title>Task Manager</Title>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+    <RegisterContainerPage data-testid="register-container-page">
+      <RegisterContainer data-testid="register-container">
+        <Title data-testid="register-title">Task Manager</Title>
+        <Form onSubmit={handleSubmit(onSubmit)} data-testid="register-form">
           <div>
-            <Label>Nome:</Label>
+            <Label htmlFor="name" data-testid="name-label">
+              Nome:
+            </Label>
             <Input
+              id="name"
+              data-testid="name-input"
               {...register("name", {
                 required: "O nome é obrigatório",
                 minLength: {
@@ -39,11 +43,19 @@ const Register: React.FC = () => {
                 },
               })}
             />
-            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+            {errors.name && (
+              <ErrorMessage data-testid="name-error">
+                {errors.name.message}
+              </ErrorMessage>
+            )}
           </div>
           <div>
-            <Label>Email:</Label>
+            <Label htmlFor="email" data-testid="email-label">
+              Email:
+            </Label>
             <Input
+              id="email"
+              data-testid="email-input"
               {...register("email", {
                 required: "O e-mail é obrigatório",
                 pattern: {
@@ -53,13 +65,19 @@ const Register: React.FC = () => {
               })}
             />
             {errors.email && (
-              <ErrorMessage>{errors.email.message}</ErrorMessage>
+              <ErrorMessage data-testid="email-error">
+                {errors.email.message}
+              </ErrorMessage>
             )}
           </div>
           <div>
-            <Label>Senha:</Label>
+            <Label htmlFor="password" data-testid="password-label">
+              Senha:
+            </Label>
             <Input
+              id="password"
               type="password"
+              data-testid="password-input"
               {...register("password", {
                 required: "A senha é obrigatória",
                 minLength: {
@@ -69,18 +87,32 @@ const Register: React.FC = () => {
               })}
             />
             {errors.password && (
-              <ErrorMessage>{errors.password.message}</ErrorMessage>
+              <ErrorMessage data-testid="password-error">
+                {errors.password.message}
+              </ErrorMessage>
             )}
           </div>
-          <ButtonContainer>
-            <SubmitButton type="submit" disabled={loading}>
+          <ButtonContainer data-testid="button-container">
+            <SubmitButton
+              type="submit"
+              disabled={loading}
+              data-testid="submit-button"
+            >
               {loading ? "Registrando..." : "Cadastre-se"}
             </SubmitButton>
-            <CancelButton type="button" onClick={handleCancel}>
+            <CancelButton
+              type="button"
+              onClick={handleCancel}
+              data-testid="cancel-button"
+            >
               Cancelar
             </CancelButton>
           </ButtonContainer>
-          {serverError && <ErrorMessage>{serverError}</ErrorMessage>}
+          {serverError && (
+            <ErrorMessage data-testid="server-error">
+              {serverError}
+            </ErrorMessage>
+          )}
         </Form>
       </RegisterContainer>
     </RegisterContainerPage>

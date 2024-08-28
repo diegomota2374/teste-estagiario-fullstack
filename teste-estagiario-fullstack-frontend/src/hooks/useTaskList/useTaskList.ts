@@ -2,12 +2,7 @@
 import { useState, useCallback } from "react";
 import { updateTask, getTaskById } from "../../services/taskService";
 import { useTasks } from "../../context/TaskContext";
-
-interface UseTaskListProps {
-  taskId: number;
-  initialTitle: string;
-  initialDescription: string;
-}
+import { UseTaskListProps } from "../../types";
 
 export const useTaskList = ({
   taskId,

@@ -45,7 +45,7 @@ const useTaskItem = ({ task }: TaskItemProps) => {
       reset({
         title: data.title,
         description: data.description,
-      }); // Reset form after successful save
+      });
       toast.success("Tarefa Editada com Sucesso!", { duration: 2000 });
     } catch (error) {
       console.error("Error saving task:", error);
@@ -53,11 +53,11 @@ const useTaskItem = ({ task }: TaskItemProps) => {
   };
 
   const handleCancel = () => {
-    handleCancelClick(); // Chama a função para sair do modo de edição
+    handleCancelClick();
     reset({
       title: task.title,
       description: task.description,
-    }); // Reseta o formulário para os valores originais
+    });
   };
 
   const handleDeleteClick = () => {

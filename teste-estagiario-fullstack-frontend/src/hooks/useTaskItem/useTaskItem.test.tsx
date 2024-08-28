@@ -1,115 +1,135 @@
-// src/hooks/useTaskItem.test.tsx
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import useTaskItem from "./useTaskItem";
+// src/hooks/useTaskItem.test.ts
+import { useTasks } from "../../context/TaskContext";
+import { useTaskList } from "../../hooks/useTaskList/useTaskList";
+import { toast } from "sonner";
 import { Task } from "../../services/taskService";
-import { useForm } from "react-hook-form";
+import { renderHook, waitFor } from "@testing-library/react";
+import useTaskItem from "./useTaskItem";
 
-// Mock the useTasks and useTaskList hooks
-jest.mock("../../context/TaskContext", () => ({
-  useTasks: jest.fn(),
-}));
+// Mock dependencies
+jest.mock("../../context/TaskContext");
+jest.mock("../../hooks/useTaskList/useTaskList");
+jest.mock("sonner");
 
-jest.mock("../../hooks/useTaskList/useTaskList", () => ({
-  useTaskList: jest.fn(),
-}));
-
-const MockComponent: React.FC<{ task: Task }> = ({ task }) => {
-  const {
-    isModalOpen,
-    register,
-    handleSubmit,
-    errors,
-    handleCancel,
-    handleDeleteClick,
-    handleConfirmDelete,
-    handleCancelDelete,
-    handleToggleComplete,
-    handleDescriptionClick,
-    showFullDescription,
-    handleEditClick,
-    onSubmit,
-    isEditing,
-  } = useTaskItem({ task });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Form and other elements for testing */}
-      <button type="submit">Submit</button>
-      <button type="button" onClick={handleCancel}>
-        Cancel
-      </button>
-      <button type="button" onClick={handleDeleteClick}>
-        Delete
-      </button>
-      {isModalOpen && (
-        <>
-          <button type="button" onClick={handleConfirmDelete}>
-            Confirm Delete
-          </button>
-          <button type="button" onClick={handleCancelDelete}>
-            Cancel Delete
-          </button>
-        </>
-      )}
-    </form>
-  );
-};
-
-describe("useTaskItem hook", () => {
+describe("useTaskItem", () => {
   const mockTask: Task = {
     id: 1,
-    userId: 1,
     title: "Test Task",
     description: "Test Description",
     completed: false,
+    userId: 1,
   };
 
-  test("handles form submission correctly", async () => {
-    render(<MockComponent task={mockTask} />);
+  const mockRemoveTask = jest.fn();
+  const mockHandleSaveClick = jest.fn();
+  const mockHandleToggleComplete = jest.fn();
+  const mockHandleEditClick = jest.fn();
+  const mockHandleCancelClick = jest.fn();
 
-    fireEvent.click(screen.getByText(/Submit/i));
+  beforeEach(() => {
+    (useTasks as jest.Mock).mockReturnValue({
+      removeTask: mockRemoveTask,
+    });
 
-    // Verify submit handler
-    await waitFor(() => {
-      // Add assertions for your submit handler here
+    (useTaskList as jest.Mock).mockReturnValue({
+      isEditing: false,
+      handleToggleComplete: mockHandleToggleComplete,
+      editedTitle: mockTask.title,
+      editedDescription: mockTask.description,
+      handleEditClick: mockHandleEditClick,
+      handleSaveClick: mockHandleSaveClick,
+      handleCancelClick: mockHandleCancelClick,
+    });
+
+    (toast.success as jest.Mock).mockClear();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should handle form submission successfully", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
+
+    await result.current.onSubmit({
+      title: "Updated Title",
+      description: "Updated Description",
+    });
+
+    expect(mockHandleSaveClick).toHaveBeenCalledWith(
+      "Updated Title",
+      "Updated Description"
+    );
+    expect(toast.success).toHaveBeenCalledWith("Tarefa Editada com Sucesso!", {
+      duration: 2000,
     });
   });
 
-  test("handles cancel correctly", () => {
-    render(<MockComponent task={mockTask} />);
+  it("should open and close the delete confirmation modal", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
 
-    fireEvent.click(screen.getByText(/Cancel/i));
+    await result.current.handleDeleteClick();
 
-    // Verify cancel handler
-    // Add assertions for your cancel handler here
+    await waitFor(() => {
+      expect(result.current.isModalOpen).toBe(true);
+    });
+
+    await result.current.handleCancelDelete();
+    await waitFor(() => {
+      expect(result.current.isModalOpen).toBe(false);
+    });
   });
 
-  test("handles delete correctly", () => {
-    render(<MockComponent task={mockTask} />);
+  it("should delete the task successfully", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
 
-    fireEvent.click(screen.getByText(/Delete/i));
+    await result.current.handleDeleteClick();
 
-    // Verify delete handler
-    // Add assertions for your delete handler here
+    await waitFor(() => {
+      expect(result.current.isModalOpen).toBe(true);
+    });
+
+    await result.current.handleConfirmDelete();
+
+    expect(mockRemoveTask).toHaveBeenCalledWith(mockTask.id);
+    expect(toast.success).toHaveBeenCalledWith("Tarefa Excluida com Sucesso!", {
+      duration: 2000,
+    });
+    await waitFor(() => {
+      expect(result.current.isModalOpen).toBe(false);
+    });
   });
 
-  test("handles confirm delete correctly", () => {
-    render(<MockComponent task={mockTask} />);
+  it("should toggle the description view", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
 
-    fireEvent.click(screen.getByText(/Delete/i));
-    fireEvent.click(screen.getByText(/Confirm Delete/i));
+    await result.current.handleDescriptionClick();
 
-    // Verify confirm delete handler
-    // Add assertions for your confirm delete handler here
+    await waitFor(() => {
+      expect(result.current.showFullDescription).toBe(true);
+    });
+
+    await result.current.handleDescriptionClick();
+
+    await waitFor(() => {
+      expect(result.current.showFullDescription).toBe(false);
+    });
   });
 
-  test("handles cancel delete correctly", () => {
-    render(<MockComponent task={mockTask} />);
+  it("should handle task editing", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
 
-    fireEvent.click(screen.getByText(/Delete/i));
-    fireEvent.click(screen.getByText(/Cancel Delete/i));
+    await result.current.handleEditClick();
 
-    // Verify cancel delete handler
-    // Add assertions for your cancel delete handler here
+    expect(mockHandleEditClick).toHaveBeenCalled();
+  });
+
+  it("should cancel editing and reset form", async () => {
+    const { result } = renderHook(() => useTaskItem({ task: mockTask }));
+
+    await result.current.handleCancel();
+
+    expect(mockHandleCancelClick).toHaveBeenCalled();
+    expect(result.current.errors).toEqual({});
   });
 });
