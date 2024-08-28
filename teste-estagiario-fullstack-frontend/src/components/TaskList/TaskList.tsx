@@ -1,5 +1,4 @@
 // src/components/TaskList.tsx
-import React from "react";
 import { useTasks } from "../../context/TaskContext";
 import TaskItem from "../TaskItem/TaskItem";
 import styled from "styled-components";
@@ -47,8 +46,8 @@ const TaskList: React.FC = () => {
 
   return (
     <>
-      <Title>Lista de Tarefas</Title>
-      <ContentList>
+      <Title data-testid="task-list-title">Lista de Tarefas</Title>
+      <ContentList data-testid="task-list">
         {tasks.map((task) => (
           <TaskItem key={task.id} task={task} />
         ))}
