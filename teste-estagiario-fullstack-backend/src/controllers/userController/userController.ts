@@ -1,9 +1,9 @@
 // src/controllers/userController.ts
 
 import { Request, Response } from "express";
-import { User } from "../entities/User";
+import { User } from "../../entities/User";
 import bcrypt from "bcryptjs";
-import { AppDataSource } from "../database/data-source";
+import { AppDataSource } from "../../database/data-source";
 
 // Obter o repositório de usuários
 const userRepository = AppDataSource.getRepository(User);

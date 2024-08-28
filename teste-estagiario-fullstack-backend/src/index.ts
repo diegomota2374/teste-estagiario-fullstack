@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import express from "express";
 import { connectDatabase } from "./database";
-import taskRoutes from "./routes/taskRoutes";
-import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes";
+import taskRoutes from "./routes/taskRoutes/taskRoutes";
+import authRoutes from "./routes/authRoutes/authRoutes";
+import userRoutes from "./routes/userRoutes/userRoutes";
 import cors from "cors";
 
 const app = express();

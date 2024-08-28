@@ -2,12 +2,12 @@
 
 ## Descrição
 
-Este projeto é uma aplicação web para gerenciamento de tarefas, construída utilizando React para o frontend e Node.js com TypeScript para o backend. A aplicação permite aos usuários se registrarem, fazerem login, e gerenciarem suas tarefas com funcionalidades completas de CRUD (criar, ler, atualizar e excluir).
+Este projeto é uma aplicação web para gerenciamento de tarefas, construída utilizando React para o frontend e Node.js para o backend com TypeScript. A aplicação permite aos usuários se registrarem, fazerem login, e gerenciarem suas tarefas com funcionalidades completas de CRUD (criar, ler, atualizar e excluir).
 
 ## Funcionalidades
 
 - **Cadastro e Autenticação de Usuário**:
-  - Registro de novos usuários com e-mail e senha.
+  - Registro de novos usuários com Nome, e-mail e senha.
   - Login e logout utilizando JSON Web Tokens (JWT).
 
 - **Gerenciamento de Tarefas**:
@@ -30,6 +30,12 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
   - React Router
   - Context API
   - Axios para requisições HTTP
+  - Jest para testes unitarios
+  - Styled Components para estilos css
+  - React Hook Form para validação de formularios
+  - Sonner para alertas
+  - JWT para autenticação
+
 
 - **Backend**:
   - Node.js
@@ -44,7 +50,7 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
 
 1. Navegue para o diretório do backend:
     ```bash
-    cd backend
+    cd teste-estagiario-fullstack-backend
     ```
 
 2. Instale as dependências:
@@ -57,13 +63,13 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
     npm run dev
     ```
 
-   O servidor estará disponível em `http://localhost:5000`.
+   O servidor estará disponível em `http://localhost:4000`.
 
 ### Frontend
 
 1. Navegue para o diretório do frontend:
     ```bash
-    cd frontend
+    cd teste-estagiario-fullstack-frontend
     ```
 
 2. Instale as dependências:
@@ -81,22 +87,32 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
 ## Estrutura do Projeto
 
 - **Backend**:
+  - `src/config/` - Configurações de autenticação
   - `src/controllers/` - Controladores da API
-  - `src/models/` - Modelos de dados
+  - `src/database/` - Configuração do BD
+  - `src/entities/` - Definição das entidades
+  - `src/interfaces/` - Definição das Interfaces
+  - `src/middleware/` - Configuração do Middleware
   - `src/routes/` - Rotas da API
-  - `src/services/` - Serviços de negócios
-  - `src/app.ts` - Configuração do servidor e middleware
+  - `src/types/` - Configuração dos tipos typescript
+  - `src/utils/` - Codigos uteis
+  - `src/index.ts` - Configuração do servidor
 
 - **Frontend**:
   - `src/components/` - Componentes React
   - `src/context/` - Contexto para gerenciamento de estado
+  - `src/hooks/` - Hooks da aplicação
   - `src/pages/` - Páginas da aplicação
   - `src/services/` - Serviços para chamadas API
+  - `src/styles/` - Estilos globais
   - `src/App.tsx` - Configuração das rotas e layout principal
+  - `src/index.tsx` - Cria uma raiz para a aplicação
+  - `src/setupTests.tsx` - Configuração do jest
+  - `src/types.tsx` - interfaces da aplicação
 
 ## Testes (Opcional)
 
 Para rodar os testes, execute:
-- **Backend**:
+- **Frontend**:
   ```bash
   npm run test

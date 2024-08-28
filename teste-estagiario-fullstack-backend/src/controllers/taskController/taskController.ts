@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { Task } from "../entities/Task";
-import { User } from "../entities/User";
-import { AppDataSource } from "../database/data-source";
-import { AuthRequest } from "../interfaces/AuthRequest";
+import { Task } from "../../entities/Task";
+import { User } from "../../entities/User";
+import { AppDataSource } from "../../database/data-source";
+import { AuthRequest } from "../../interfaces/AuthRequest";
 
 const taskRepository = AppDataSource.getRepository(Task);
 const userRepository = AppDataSource.getRepository(User);
