@@ -1,9 +1,12 @@
 // src/pages/TaskPage/TaskPage.test.tsx
+import "../../__mocks__/axios.mjs";
+
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import TaskPage from "./TaskPage";
-import { TaskProvider } from "../../context/TaskContext"; // Import the TaskProvider
 import useTaskForm from "../../hooks/useTaskForm/useTaskForm";
+import { TaskProvider } from "../../context/TaskContext";
+import { AuthProvider } from "../../context/AuthContext";
 
 // Mock the useTaskForm hook
 jest.mock("../../hooks/useTaskForm/useTaskForm");
@@ -31,9 +34,11 @@ describe("TaskPage", () => {
   // Helper function to render the component with the TaskProvider
   const renderWithProvider = () => {
     return render(
-      <TaskProvider>
-        <TaskPage />
-      </TaskProvider>
+      <AuthProvider>
+        <TaskProvider>
+          <TaskPage />
+        </TaskProvider>
+      </AuthProvider>
     );
   };
 
@@ -69,7 +74,7 @@ describe("TaskPage", () => {
       expect(screen.queryByTestId("task-list")).not.toBeInTheDocument();
     });
 
-    // Click Cancel to hide TaskForm
+    // Click again to hide TaskForm
     fireEvent.click(screen.getByTestId("cancel-button"));
 
     await waitFor(() => {
@@ -96,17 +101,19 @@ describe("TaskPage", () => {
     // Show TaskForm
     fireEvent.click(screen.getByTestId("floatingButtonButton"));
 
-    // Fill out the form fields
-    fireEvent.change(screen.getByTestId("input-title"), {
-      target: { value: "Task Title" },
-    });
-    fireEvent.change(screen.getByTestId("textarea-description"), {
-      target: { value: "Task Description" },
+    await waitFor(() => {
+      // Fill out the form fields
+      fireEvent.change(screen.getByTestId("input-title"), {
+        target: { value: "Task Title" },
+      });
+      fireEvent.change(screen.getByTestId("textarea-description"), {
+        target: { value: "Task Description" },
+      });
     });
 
     // Simulate form submission
     await waitFor(() => {
-      fireEvent.submit(screen.getByTestId("submit-button"));
+      fireEvent.submit(screen.getByTestId("form-container"));
     });
 
     expect(mockOnSubmit).toHaveBeenCalled();

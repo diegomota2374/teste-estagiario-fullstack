@@ -11,14 +11,17 @@ describe("TaskCheckboxLabel", () => {
     const button = screen.getByTestId("task-checkbox-button");
     fireEvent.click(button);
 
-    expect(screen.getByTestId("loading-text")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId("loading-text")).toBeInTheDocument();
+    });
 
     await waitFor(() => {
       expect(mockOnChange).toHaveBeenCalled();
     });
 
-    // After the async operation completes, loading text should not be present
-    expect(screen.queryByTestId("loading-text")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByTestId("loading-text")).not.toBeInTheDocument();
+    });
   });
 
   it("should display 'Completo' when checked", () => {
