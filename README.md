@@ -21,6 +21,7 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
   - Interface responsiva e intuitiva desenvolvida com React.
   - Utiliza Context API para gerenciamento de estado.
   - Navegação com React Router.
+  - Alertas com Sonner.
 
 ## Tecnologias Utilizadas
 
@@ -99,6 +100,7 @@ Este projeto é uma aplicação web para gerenciamento de tarefas, construída u
   - `src/index.ts` - Configuração do servidor
 
 - **Frontend**:
+  - `src/__mocks__/` - Mock axios com respostas customizadas
   - `src/components/` - Componentes React
   - `src/context/` - Contexto para gerenciamento de estado
   - `src/hooks/` - Hooks da aplicação
