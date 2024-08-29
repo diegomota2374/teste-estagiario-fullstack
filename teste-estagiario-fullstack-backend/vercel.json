@@ -9,5 +9,5 @@
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dist": "./index.js" }]
+  "routes": [{ "src": "/(.*)", "dist": "dist/index.js" }]
 }
