@@ -8,7 +8,9 @@ export interface Task {
   completed: boolean;
 }
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://task-manager-backend-wheat-seven.vercel.app";
 
 // Helper function to get authentication headers
 const getAuthHeaders = () => {
