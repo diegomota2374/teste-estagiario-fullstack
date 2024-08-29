@@ -13,6 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]  // Inclua aqui o diretório de tipos personalizados
   },
-  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
+  "include": ["src/**/*","src/**/*.ts", "src/types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
