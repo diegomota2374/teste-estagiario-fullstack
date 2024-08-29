@@ -1,12 +1,18 @@
 import { DataSource } from "typeorm";
 import path from "path";
+import { User } from "../entities/User";
+import { Task } from "../entities/Task";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
-  database: path.join(__dirname, "../src/database/database.sqlite"),
+  database: path.join(__dirname, "../database/database.sqlite"),
   synchronize: true,
   logging: false,
-  entities: [path.join(__dirname, "../src/entities/*.js")], // Adjust path for compiled JS files
+  entities: isProduction
+    ? [path.join(__dirname, "../entities/*.js")] // Use paths to compiled JavaScript files in production
+    : [User, Task], // Use class references in development
   migrations: [],
   subscribers: [],
 });
