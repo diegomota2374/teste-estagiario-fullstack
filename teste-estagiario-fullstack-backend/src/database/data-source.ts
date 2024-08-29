@@ -1,7 +1,5 @@
 import { DataSource } from "typeorm";
 import path from "path";
-import { User } from "../entities/User"; // Importar diretamente para desenvolvimento
-import { Task } from "../entities/Task";
 require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -12,8 +10,8 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: true,
   entities: isProduction
-    ? [path.join(__dirname, "../entities/*.js")] // Certifique-se de que este caminho está correto
-    : [User, Task], // Utilizado em desenvolvimento
+    ? [path.join(__dirname, "../entities/*.js")]
+    : [path.join(__dirname, "../entities/*.ts")], // Use o caminho correto para arquivos .ts ou .js
   migrations: [],
   subscribers: [],
 });
