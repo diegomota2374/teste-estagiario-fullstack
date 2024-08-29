@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   type: "sqlite",
   database: path.join(__dirname, "../database/database.sqlite"),
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: isProduction
     ? [path.join(__dirname, "../entities/*.js")] // Use paths to compiled JavaScript files in production
     : [User, Task], // Use class references in development
