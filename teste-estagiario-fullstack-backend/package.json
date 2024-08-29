@@ -7,11 +7,9 @@
     "node": ">=14.x"
   },
   "scripts": {
-    "build": "tsc && npm run copy-files",
-    "copy-files": "copyfiles -u 1 src/**/*.js dist/",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "dev": "nodemon src/index.ts",
-    "prepare": "npm run build"
+    "build": "tsc"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
