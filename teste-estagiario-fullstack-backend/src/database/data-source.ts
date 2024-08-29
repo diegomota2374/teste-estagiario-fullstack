@@ -1,12 +1,13 @@
 import { DataSource } from "typeorm";
-import path from "path";
+import { User } from "../entities/User";
+import { Task } from "../entities/Task";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
-  database: path.join(__dirname, "../database/database.sqlite"),
+  database: "./src/database/database.sqlite",
   synchronize: true,
   logging: false,
-  entities: [path.join(__dirname, "../entities/*.js")], // Path to the compiled JS files
+  entities: [User, Task],
   migrations: [],
   subscribers: [],
 });
