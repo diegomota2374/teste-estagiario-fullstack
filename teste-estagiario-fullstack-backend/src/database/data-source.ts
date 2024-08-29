@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import path from "path";
-import { User } from "../entities/User";
-import { Task } from "../entities/Task";
+const { User } = require("../entities/User");
+const { Task } = require("../entities/Task");
 require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
