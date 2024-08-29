@@ -2,13 +2,11 @@ import { DataSource } from "typeorm";
 import path from "path";
 import { User } from "../entities/User";
 import { Task } from "../entities/Task";
+require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
-console.log(
-  "Entities Path:",
-  isProduction ? path.resolve(__dirname, "../entities/*.js") : [User, Task]
-);
+console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
