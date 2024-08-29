@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import path from "path";
-const { User } = require("../entities/User");
-const { Task } = require("../entities/Task");
+import { User } from "../entities/User";
+import { Task } from "../entities/Task.js";
 require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -14,7 +14,10 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: true,
   entities: isProduction
-    ? [path.resolve(__dirname, "../entities/*.js")] // Use paths to compiled JavaScript files in production
+    ? [
+        path.resolve(__dirname, "../entities/User.js"),
+        path.resolve(__dirname, "../entities/Task.js"),
+      ] // Use paths to compiled JavaScript files in production
     : [User, Task], // Use class references in development
   migrations: [],
   subscribers: [],
