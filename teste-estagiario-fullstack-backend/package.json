@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Meu projeto backend com Node.js, TypeScript e Express",
   "main": "dist/src/index.js",
+  "engines": {
+    "node": ">=14.x"
+  },
   "scripts": {
     "start": "node dist/src/index.js",
     "dev": "nodemon src/index.ts",

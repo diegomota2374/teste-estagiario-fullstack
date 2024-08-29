@@ -10,7 +10,7 @@ export interface Task {
 
 const API_URL =
   process.env.REACT_APP_API_URL ||
-  "https://task-manager-backend-nine-pied.vercel.app";
+  "https://teste-estagiario-fullstack.vercel.app";
 
 // Helper function to get authentication headers
 const getAuthHeaders = () => {
