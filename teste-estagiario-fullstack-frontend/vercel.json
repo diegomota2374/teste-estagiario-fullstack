@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/index.txs",
+      "use": "@vercel/react",
+      "config": {
+        "includeFiles": ["src/**/*", "routes/**/*"]
+      }
+    }
+  ],
+  "routes": [{ "src": "/(.*)", "dest": "src/index.txs" }]
+}
