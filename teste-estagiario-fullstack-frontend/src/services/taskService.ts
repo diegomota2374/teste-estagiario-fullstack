@@ -8,7 +8,9 @@ export interface Task {
   completed: boolean;
 }
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://diego-task-management-928a6215b043.herokuapp.com";
 
 // Helper function to get authentication headers
 const getAuthHeaders = () => {
