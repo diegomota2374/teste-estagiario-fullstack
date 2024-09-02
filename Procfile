@@ -1,0 +1,1 @@
+web: node teste-estagiario-fullstack-backend/dist/index.js
